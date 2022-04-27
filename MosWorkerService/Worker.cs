@@ -2,7 +2,6 @@ using MosWorkerService.Models;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using CsvHelper;
-using System.Text;
 using System.Globalization;
 
 namespace MosWorkerService
@@ -76,8 +75,6 @@ namespace MosWorkerService
             }
 
             WriteCsv(csvModelList);
-
-            ResetTimer();
         }
 
         private string UrlGenerator(string date, string stockNumber)
@@ -89,16 +86,6 @@ namespace MosWorkerService
             url = regex.Replace(url, stockNumber, 1);
 
             return url;
-        }
-
-        private void ResetTimer()
-        {
-            DateTime.TryParse(_appSettings.FetchTime, out var fetchTime);
-            var nowTime = DateTime.Now;
-
-            var gapTimespan = fetchTime.Subtract(nowTime);
-
-            _timer?.Change(0, Convert.ToInt32(gapTimespan.TotalSeconds));
         }
 
         private void WriteCsv(List<CsvModel> csvModelList)
