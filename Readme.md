@@ -1,7 +1,7 @@
 # Introduction
 
-### This worker service can fetch the stock data from TWSE everyday.
-### Some attributes can be modified in appsettings.json.
+This worker service can fetch the stock data from TWSE everyday.
+Some attributes can be modified in appsettings.json.
 
 # Parameters
 
