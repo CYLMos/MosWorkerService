@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using CsvHelper;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace MosWorkerService
 {
@@ -27,7 +28,7 @@ namespace MosWorkerService
             var waitTime = gapTimespan.TotalSeconds > 0 ? TimeSpan.FromSeconds(gapTimespan.TotalSeconds) : TimeSpan.Zero;
 
             _timer = new Timer(
-                FetchProcess, null, TimeSpan.Zero, TimeSpan.FromSeconds(86400));
+                FetchProcess, null, waitTime, TimeSpan.FromSeconds(86400));
 
             return Task.CompletedTask;
         }
