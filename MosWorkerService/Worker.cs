@@ -27,7 +27,7 @@ namespace MosWorkerService
             var waitTime = gapTimespan.TotalSeconds > 0 ? TimeSpan.FromSeconds(gapTimespan.TotalSeconds) : TimeSpan.Zero;
 
             _timer = new Timer(
-                FetchProcess, null, waitTime, TimeSpan.FromSeconds(86400));
+                FetchProcess, null, TimeSpan.Zero, TimeSpan.FromSeconds(86400));
 
             return Task.CompletedTask;
         }
@@ -53,6 +53,7 @@ namespace MosWorkerService
         {
             var dateString = DateTime.Now.ToString("yyyyMMdd");
             var csvModelList = new List<CsvModel>();
+            var httpClient = new HttpClient();
 
             foreach (var stockNumber in _appSettings.StockNumber)
             {
@@ -60,7 +61,6 @@ namespace MosWorkerService
 
                 try
                 {
-                    var httpClient = new HttpClient();
                     var response = await httpClient.GetAsync(url);
                     var content = await response.Content.ReadAsStringAsync();
 
@@ -73,6 +73,8 @@ namespace MosWorkerService
                     _logger.LogError(null, ex);
                 }
             }
+
+            httpClient.Dispose();
 
             WriteCsv(csvModelList);
         }
