@@ -2,6 +2,7 @@
 {
     public class CsvModel
     {
+        public string StockNumber { get; set; }
         public string Date { get; set; }
         public string TradingVolume { get; set; }
         public string Transaction { get; set; }

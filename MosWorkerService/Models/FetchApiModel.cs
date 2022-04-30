@@ -9,27 +9,33 @@
         public List<List<string>> data { get; set; }
         public List<string> notes { get; set; }
 
-        public CsvModel TransferToCsvModel()
+        public CsvModel TransferToCsvModel(string stockNumber)
         {
             var month = date?.Substring(4, 2);
             var day = date?.Substring(6, 2);
 
             var todayData = data.FirstOrDefault(subData => subData[0].Contains($"{month}/{day}"));
 
-            var csvModel = new CsvModel()
+            if (todayData != null)
             {
-                Date = todayData[0],
-                TradingVolume = todayData[1],
-                Transaction = todayData[2],
-                OpeningPrice = todayData[3],
-                HightestPrice = todayData[4],
-                LowestPrice = todayData[5],
-                ClosingPrice = todayData[6],
-                Change = todayData[7],
-                Turnover = todayData[8]
-            };
+                var csvModel = new CsvModel()
+                {
+                    StockNumber = stockNumber,
+                    Date = todayData[0],
+                    TradingVolume = todayData[1],
+                    Transaction = todayData[2],
+                    OpeningPrice = todayData[3],
+                    HightestPrice = todayData[4],
+                    LowestPrice = todayData[5],
+                    ClosingPrice = todayData[6],
+                    Change = todayData[7],
+                    Turnover = todayData[8]
+                };
 
-            return csvModel;
+                return csvModel;
+            }
+            else
+                return new CsvModel();
         }
     }
 }

@@ -66,7 +66,7 @@ namespace MosWorkerService
                     var content = await response.Content.ReadAsStringAsync();
 
                     var fetchData = JsonConvert.DeserializeObject<FetchApiModel>(content);
-                    var csvData = fetchData?.TransferToCsvModel();
+                    var csvData = fetchData?.TransferToCsvModel(stockNumber);
                     csvModelList.Add(csvData);
                 }
                 catch (Exception ex)
